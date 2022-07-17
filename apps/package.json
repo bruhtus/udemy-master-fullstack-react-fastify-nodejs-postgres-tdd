@@ -8,7 +8,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "fastify": "^4.2.1"
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
+    "fastify": "^4.2.1",
+    "pg-promise": "^10.11.1"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
