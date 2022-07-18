@@ -4,16 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "jest"
+    "start": "env-cmd nodemon server.js",
+    "test": "jest",
+    "migrate": "npx db-migrate down && npx db-migrate up"
   },
   "dependencies": {
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "fastify": "^4.2.1",
+    "fastify-plugin": "^4.0.0",
     "pg-promise": "^10.11.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
