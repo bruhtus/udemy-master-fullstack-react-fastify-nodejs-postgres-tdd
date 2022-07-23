@@ -10,6 +10,11 @@ async function route(fastify) {
 
     reply.code(201).send(id);
   });
+
+  fastify.get('/', async (request, reply) => {
+    const allItems = await fastify.db.query('SELECT * FROM test_table');
+    reply.code(200).send(allItems);
+  });
 }
 
 module.exports = route;
