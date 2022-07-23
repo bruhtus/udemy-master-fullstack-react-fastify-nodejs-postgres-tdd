@@ -1,5 +1,5 @@
 const fastify = require('fastify');
-const db = require('../plugin/database');
+const db = require('./plugin/database');
 
 function build(opts = {}) {
   const app = fastify(opts);
