@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "env-cmd nodemon server.js",
-    "test": "jest",
+    "test": "env-cmd jest",
     "migrate": "npx db-migrate down && npx db-migrate up"
   },
   "dependencies": {
