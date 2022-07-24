@@ -6,7 +6,7 @@
   "scripts": {
     "start": "env-cmd nodemon server.js",
     "test": "env-cmd jest --detectOpenHandles --forceExit",
-    "migrate": "npx db-migrate down && npx db-migrate up",
+    "migrate": "pnpm exec db-migrate down && pnpm exec db-migrate up",
     "check-in-dance": "docker-compose down -v && docker-compose up -d && sleep 1 && pnpm run migrate"
   },
   "dependencies": {
