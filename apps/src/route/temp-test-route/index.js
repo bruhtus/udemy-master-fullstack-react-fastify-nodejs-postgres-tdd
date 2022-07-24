@@ -1,18 +1,18 @@
+const tempHandler = require('../../handler/temp.handler');
+
 async function route(fastify) {
+  const handler = tempHandler(fastify);
+
   fastify.post('/', async (request, reply) => {
     fastify.log.info(`request with body: ${request}`);
     const { title } = request.body;
 
-    const id = await fastify.db.one(
-      'INSERT INTO test_table(title) VALUES($1) RETURNING id',
-      [title]
-    );
-
+    const id = await handler.post(title);
     return reply.code(201).send(id);
   });
 
   fastify.get('/', async (request, reply) => {
-    const allItems = await fastify.db.query('SELECT * FROM test_table');
+    const allItems = await handler.getMany();
     return reply.code(200).send(allItems);
   });
 }
