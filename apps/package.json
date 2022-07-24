@@ -6,7 +6,8 @@
   "scripts": {
     "start": "env-cmd nodemon server.js",
     "test": "env-cmd jest",
-    "migrate": "npx db-migrate down && npx db-migrate up"
+    "migrate": "npx db-migrate down && npx db-migrate up",
+    "check-in-dance": "docker-compose down -v && docker-compose up -d && sleep 1 && pnpm run migrate"
   },
   "dependencies": {
     "db-migrate": "^0.11.13",
