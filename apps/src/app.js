@@ -11,8 +11,8 @@ function build(opts = {}) {
   // register route.
   app.register(testRoute, { prefix: 'api/v1/test' });
 
-  app.get('/', async (request, reply) => {
-    reply.code(200).send({ hello: 'world' });
+  app.get('/', (request, reply) => {
+    return reply.code(200).send({ hello: 'world' });
   });
 
   return app;
