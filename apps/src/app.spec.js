@@ -28,7 +28,7 @@ describe('app route', () => {
       payload: { title: 'test title' },
     });
 
-    expect(postResponse.json().id).toBeDefined();
+    expect(postResponse.json().data.id).toBeDefined();
     expect(postResponse.statusCode).toBe(201);
 
     const getManyResponse = await app.inject({

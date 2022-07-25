@@ -17,7 +17,9 @@ async function route(fastify) {
       const { title } = request.body;
 
       const id = await handler.post(title);
-      return reply.code(201).send(id);
+      return reply.code(201).send({
+        data: id,
+      });
     }
   );
 

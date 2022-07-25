@@ -12,11 +12,16 @@ const postResponseSchema = {
   201: {
     type: 'object',
     properties: {
-      id: {
-        type: 'string',
+      data: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+          },
+        },
+        required: ['id'],
       },
     },
-    required: ['id'],
   },
 };
 
