@@ -21,10 +21,20 @@ async function route(fastify) {
     }
   );
 
-  fastify.get('/', async (request, reply) => {
-    const allItems = await handler.getMany();
-    return reply.code(200).send(allItems);
-  });
+  fastify.get(
+    '/',
+    {
+      schema: {
+        response: tempSchema.getManyResponseSchema,
+      },
+    },
+    async (request, reply) => {
+      const allItems = await handler.getMany();
+      return reply.code(200).send({
+        data: allItems,
+      });
+    }
+  );
 }
 
 module.exports = route;

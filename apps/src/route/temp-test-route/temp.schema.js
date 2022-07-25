@@ -20,4 +20,20 @@ const postResponseSchema = {
   },
 };
 
-module.exports = { postRequestSchema, postResponseSchema };
+const getManyResponseSchema = {
+  200: {
+    type: 'object',
+    properties: {
+      data: {
+        type: 'array',
+        items: postResponseSchema[201],
+      },
+    },
+  },
+};
+
+module.exports = {
+  postRequestSchema,
+  postResponseSchema,
+  getManyResponseSchema,
+};
