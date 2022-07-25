@@ -1,15 +1,25 @@
 const tempHandler = require('../../handler/temp.handler');
+const tempSchema = require('./temp.schema');
 
 async function route(fastify) {
   const handler = tempHandler(fastify);
 
-  fastify.post('/', async (request, reply) => {
-    fastify.log.info(`request with body: ${request}`);
-    const { title } = request.body;
+  fastify.post(
+    '/',
+    {
+      schema: {
+        body: tempSchema.postRequestSchema,
+        response: tempSchema.postResponseSchema,
+      },
+    },
+    async (request, reply) => {
+      fastify.log.info(`request with body: ${request}`);
+      const { title } = request.body;
 
-    const id = await handler.post(title);
-    return reply.code(201).send(id);
-  });
+      const id = await handler.post(title);
+      return reply.code(201).send(id);
+    }
+  );
 
   fastify.get('/', async (request, reply) => {
     const allItems = await handler.getMany();
