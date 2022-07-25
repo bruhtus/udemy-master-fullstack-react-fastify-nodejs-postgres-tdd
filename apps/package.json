@@ -10,6 +10,7 @@
     "check-in-dance": "docker-compose down -v && docker-compose up -d && sleep 1 && pnpm run migrate"
   },
   "dependencies": {
+    "@fastify/swagger": "^7.4.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "fastify": "^4.2.1",
