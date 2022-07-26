@@ -31,7 +31,17 @@ const getManyResponseSchema = {
     properties: {
       data: {
         type: 'array',
-        items: postResponseSchema[201],
+        items: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+            },
+            title: {
+              type: 'string',
+            },
+          },
+        },
       },
     },
   },
