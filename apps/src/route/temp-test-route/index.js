@@ -8,6 +8,7 @@ async function route(fastify) {
     '/',
     {
       schema: {
+        tags: ['Temp'],
         body: tempSchema.postRequestSchema,
         response: tempSchema.postResponseSchema,
       },
@@ -27,6 +28,7 @@ async function route(fastify) {
     '/',
     {
       schema: {
+        tags: ['Temp'],
         response: tempSchema.getManyResponseSchema,
       },
     },
