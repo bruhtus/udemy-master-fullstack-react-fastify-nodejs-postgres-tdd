@@ -1,5 +1,6 @@
 const fastify = require('fastify');
 const db = require('./plugin/database');
+const rootRoute = require('./route/root-route');
 const testRoute = require('./route/temp-test-route');
 const swaggerPlugin = require('./plugin/swagger');
 
@@ -12,10 +13,7 @@ function build(opts = {}) {
 
   // register route.
   app.register(testRoute, { prefix: 'api/v1/test' });
-
-  app.get('/', (request, reply) => {
-    return reply.code(200).send({ hello: 'world' });
-  });
+  app.register(rootRoute);
 
   return app;
 }
