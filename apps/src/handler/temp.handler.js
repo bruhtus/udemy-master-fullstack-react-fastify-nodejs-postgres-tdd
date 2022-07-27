@@ -1,7 +1,7 @@
-const dataAccessObject = require('../data-access-object/temp.dao');
+const tempDao = require('../data-access-object/temp.dao');
 
 function tempHandler(fastify) {
-  const dao = dataAccessObject(fastify);
+  const dao = tempDao(fastify);
 
   async function getMany() {
     return await dao.getMany();
