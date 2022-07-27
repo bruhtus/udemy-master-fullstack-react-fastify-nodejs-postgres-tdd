@@ -18,7 +18,20 @@ function userRepository(db) {
     }
   }
 
-  return { createUser };
+  async function getUserById(userId) {
+    try {
+      const user = await db.one(
+        'SELECT * FROM users_table WHERE users_table.id = $1',
+        [userId]
+      );
+
+      return user;
+    } catch (error) {
+      throw new Error(`user id ${userId} does not exist!`);
+    }
+  }
+
+  return { createUser, getUserById };
 }
 
 module.exports = userRepository;
