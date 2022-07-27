@@ -1,6 +1,7 @@
 const Fastify = require('fastify');
 const userRepository = require('./user.dao');
 const dbPlugin = require('../plugin/database');
+const { v4: uuidv4 } = require('uuid');
 
 describe('user repository', () => {
   let app;
@@ -47,6 +48,32 @@ describe('user repository', () => {
     expect.assertions(1);
     await expect(createUser(user)).rejects.toThrow(
       Error('Password and email is required!')
+    );
+  });
+
+  it('should be able to get user by id', async () => {
+    const user = {
+      first_name: 'The',
+      last_name: 'Primeagen',
+      password: 'beat_me_daddy',
+      email: 'bunspreader@dox-me-daddy.com',
+    };
+
+    const { createUser, getUserById } = userRepository(app.db);
+    const userId = await createUser(user);
+    const getByIdResponse = await getUserById(userId);
+
+    expect(getByIdResponse).toBeDefined();
+    expect(getByIdResponse).toMatchObject(user);
+  });
+
+  it('should throw error when user does not exist', async () => {
+    const { getUserById } = userRepository(app.db);
+    const userId = uuidv4();
+
+    expect.assertions(1);
+    await expect(getUserById(userId)).rejects.toThrow(
+      Error(`user id ${userId} does not exist!`)
     );
   });
 });
