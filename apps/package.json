@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "env-cmd nodemon server.js",
-    "test": "env-cmd jest --detectOpenHandles --forceExit",
+    "test": "env-cmd jest --detectOpenHandles",
     "migrate": "pnpm exec db-migrate down && pnpm exec db-migrate up",
     "check-in-dance": "docker-compose down -v && docker-compose up -d && sleep 1 && pnpm run migrate"
   },
