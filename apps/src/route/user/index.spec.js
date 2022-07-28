@@ -94,4 +94,46 @@ describe('user route', () => {
 
     expect(postResponse.statusCode).toBe(400);
   });
+
+  it('should be able to get user by id', async () => {
+    const { first_name: _, last_name: __, password: ___, ...userData } = user;
+
+    const data = {
+      ...userData,
+      id: uuid,
+      name: `${user.first_name} ${user.last_name}`,
+    };
+
+    getUserByIdHandler.mockReturnValueOnce(data);
+
+    const getByIdResponse = await app.inject({
+      method: 'GET',
+      url: `api/v1/user/${uuid}`,
+    });
+
+    expect(getByIdResponse.json().data).toMatchObject(data);
+    expect(getByIdResponse.statusCode).toBe(200);
+  });
+
+  it('should be able to reject if user id params not valid', async () => {
+    const { first_name: _, last_name: __, password: ___, ...userData } = user;
+
+    const data = {
+      ...userData,
+      id: uuid,
+      name: `${user.first_name} ${user.last_name}`,
+    };
+
+    getUserByIdHandler.mockReturnValueOnce(data);
+
+    const getByIdResponse = await app.inject({
+      method: 'GET',
+      url: 'api/v1/user/not-uuid',
+    });
+
+    expect(getByIdResponse.json().message).toBe(
+      'params/id must match format "uuid"'
+    );
+    expect(getByIdResponse.statusCode).toBe(400);
+  });
 });
