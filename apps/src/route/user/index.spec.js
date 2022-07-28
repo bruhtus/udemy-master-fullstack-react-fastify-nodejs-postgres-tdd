@@ -66,7 +66,7 @@ describe('user route', () => {
   it('should be able to reject if required property empty', async () => {
     createUserHandler.mockReturnValueOnce(uuid);
 
-    const { first_name: _, ...request } = user;
+    const { first_name: _, last_name: __, ...request } = user;
 
     const postResponse = await app.inject({
       method: 'POST',
