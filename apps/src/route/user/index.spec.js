@@ -35,8 +35,7 @@ describe('user route', () => {
   });
 
   it('should be able to create user', async () => {
-    // TODO: try out with mockReturnValueOnce().
-    createUserHandler.mockImplementation(() => uuid);
+    createUserHandler.mockReturnValueOnce(uuid);
 
     const postResponse = await app.inject({
       method: 'POST',
@@ -50,7 +49,6 @@ describe('user route', () => {
   });
 
   it('should be able to reject if request is invalid', async () => {
-    // TODO: try out with mockReturnValueOnce().
     createUserHandler.mockImplementation(() => {
       throw new Error('Invalid data');
     });
@@ -66,8 +64,7 @@ describe('user route', () => {
   });
 
   it('should be able to reject if required property empty', async () => {
-    // TODO: try out with mockReturnValueOnce().
-    createUserHandler.mockImplementation(() => uuid);
+    createUserHandler.mockReturnValueOnce(uuid);
 
     const { first_name: _, ...request } = user;
 
@@ -81,8 +78,7 @@ describe('user route', () => {
   });
 
   it('should be able to reject incorrect format email request', async () => {
-    // TODO: try out with mockReturnValueOnce().
-    createUserHandler.mockImplementation(() => uuid);
+    createUserHandler.mockReturnValueOnce(uuid);
 
     // Ref: https://stackoverflow.com/a/53753294
     const { first_name: _, ...request } = user;
