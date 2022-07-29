@@ -95,5 +95,22 @@ describe('user handler', () => {
       name: `${responseWithoutLastName.first_name} ${responseWithoutLastName.middle_name}`,
       email: user.email,
     });
+
+    const responseWithNullMiddleName = {
+      ...user,
+      id: uuid,
+      middle_name: null,
+    };
+
+    getUserById.mockReturnValueOnce(responseWithNullMiddleName);
+
+    const userWithNullMiddleName = await handler.getUserByIdHandler(uuid);
+
+    expect(getUserById).toBeCalled();
+    expect(userWithNullMiddleName).toMatchObject({
+      id: uuid,
+      name: `${responseWithNullMiddleName.first_name} ${responseWithNullMiddleName.last_name}`,
+      email: user.email,
+    });
   });
 });
