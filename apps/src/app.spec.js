@@ -1,6 +1,13 @@
 const build = require('./app');
 
 describe('app route', () => {
+  const user = {
+    first_name: 'The',
+    last_name: 'Primeagen',
+    password: 'beat_me_daddy',
+    email: 'bunspreader@dox-me-daddy.com',
+  };
+
   let app;
 
   beforeAll(() => {
@@ -37,5 +44,39 @@ describe('app route', () => {
     });
 
     expect(getManyResponse.statusCode).toBe(200);
+  });
+
+  it('should be able to create user in database', async () => {
+    const postResponse = await app.inject({
+      method: 'POST',
+      url: 'api/v1/user',
+      payload: user,
+    });
+
+    expect(postResponse.json().data.id).toBeDefined();
+    expect(postResponse.statusCode).toBe(201);
+  });
+
+  it('should be able to get user by id from database', async () => {
+    const postResponse = await app.inject({
+      method: 'POST',
+      url: 'api/v1/user',
+      payload: user,
+    });
+
+    expect(postResponse.json().data.id).toBeDefined();
+    expect(postResponse.statusCode).toBe(201);
+
+    const {
+      data: { id },
+    } = postResponse.json();
+
+    const getByIdResponse = await app.inject({
+      method: 'GET',
+      url: `api/v1/user/${id}`,
+    });
+
+    expect(getByIdResponse.json().data.id).toBe(id);
+    expect(getByIdResponse.statusCode).toBe(200);
   });
 });
