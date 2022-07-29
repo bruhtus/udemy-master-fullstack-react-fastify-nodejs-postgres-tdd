@@ -25,6 +25,24 @@ async function userRoute(fastify) {
       }
     }
   );
+
+  fastify.get(
+    '/:id',
+    {
+      schema: {
+        params: schema.paramsSchema,
+        response: schema.getByIdResponseSchema,
+      },
+    },
+    async (request, reply) => {
+      const { id } = request.params;
+
+      const user = await handler.getUserByIdHandler(id);
+      reply.code(200).send({
+        data: user,
+      });
+    }
+  );
 }
 
 module.exports = userRoute;
