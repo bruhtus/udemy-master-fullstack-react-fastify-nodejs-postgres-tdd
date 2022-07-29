@@ -2,6 +2,7 @@ const Fastify = require('fastify');
 const jobRepository = require('./job.dao');
 const userRepository = require('./user.dao');
 const dbPlugin = require('../plugin/database');
+const luxon = require('luxon');
 
 describe('job repository', () => {
   let app;
@@ -22,12 +23,14 @@ describe('job repository', () => {
     return id;
   }
 
-  // Ref: https://stackoverflow.com/a/3674559
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  // Ref: https://moment.github.io/luxon/demo/global.html
+  const tomorrow = luxon.DateTime.now()
+    .plus({ days: 1 })
+    .toFormat('yyyy-MM-dd');
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterday = luxon.DateTime.now()
+    .plus({ days: -1 })
+    .toFormat('yyyy-MM-dd');
 
   beforeAll(async () => {
     app = Fastify();
@@ -43,7 +46,7 @@ describe('job repository', () => {
       skills: 'test job skill',
       min_budget: 69,
       max_budget: 69420,
-      expired_at: `${tomorrow.getFullYear()}-${tomorrow.getMonth()}-${tomorrow.getDate()}`,
+      expired_at: tomorrow,
       user_id: userId,
     };
   });
@@ -115,7 +118,7 @@ describe('job repository', () => {
     await createJob({
       ...job,
       title: 'test job title with expired date',
-      expired_at: `${yesterday.getFullYear()}-${yesterday.getMonth()}-${yesterday.getDate()}`,
+      expired_at: yesterday,
     });
 
     // Note: get 2 item and skip 0 item.

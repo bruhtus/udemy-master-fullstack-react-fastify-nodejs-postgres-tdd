@@ -1,3 +1,5 @@
+const luxon = require('luxon');
+
 function jobRepository(db) {
   async function createJob(job) {
     try {
@@ -23,11 +25,11 @@ function jobRepository(db) {
   // limit is how many items per page.
   // offset is how many items we need to skip.
   async function getAllJobs(limit, offset) {
-    const currentDate = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+    const today = luxon.DateTime.now().toFormat('yyyy-MM-dd');
 
     const jobs = await db.query(
       'SELECT * FROM jobs_table WHERE expired_at >= $1 ORDER BY created_at LIMIT $2 OFFSET $3',
-      [currentDate, limit, offset]
+      [today, limit, offset]
     );
 
     return jobs;
