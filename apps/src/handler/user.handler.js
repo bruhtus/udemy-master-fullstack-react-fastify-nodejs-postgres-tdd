@@ -12,6 +12,7 @@ function userHandler(fastify) {
     const user = await dao.getUserById(userId);
     const name = [user.first_name, user.middle_name, user.last_name]
       .filter((name) => name !== undefined)
+      .filter((name) => name !== null)
       .join(' ');
 
     return {
