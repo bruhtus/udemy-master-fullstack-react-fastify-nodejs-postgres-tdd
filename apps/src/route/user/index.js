@@ -8,6 +8,7 @@ async function userRoute(fastify) {
     '/',
     {
       schema: {
+        tags: ['User'],
         body: schema.postRequestSchema,
         response: schema.postResponseSchema,
       },
@@ -30,6 +31,7 @@ async function userRoute(fastify) {
     '/:id',
     {
       schema: {
+        tags: ['User'],
         params: schema.paramsSchema,
         response: schema.getByIdResponseSchema,
       },
