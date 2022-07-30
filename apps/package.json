@@ -6,6 +6,7 @@
   "scripts": {
     "start": "env-cmd nodemon server.js",
     "test": "env-cmd jest --detectOpenHandles",
+    "test:app": "env-cmd jest --detectOpenHandles src",
     "migrate": "pnpm exec db-migrate down && pnpm exec db-migrate up",
     "check-in-dance": "docker-compose down -v && docker-compose up -d && sleep 1 && pnpm run migrate"
   },
