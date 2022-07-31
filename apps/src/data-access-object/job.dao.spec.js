@@ -54,7 +54,12 @@ describe('job repository', () => {
   // Note:
   // delete all the items in database after running the test.
   // this is so that any test case do not depend on another test case.
-  afterEach(async () => {
+  // FIXME:
+  // this is dangerous because it will delete all the data in database, even
+  // the seeder data.
+  // because this is supposed to be a learning material, i will leave it here.
+  // need to find a better solution later.
+  beforeEach(async () => {
     await app.db.query('DELETE FROM jobs_table');
   });
 
