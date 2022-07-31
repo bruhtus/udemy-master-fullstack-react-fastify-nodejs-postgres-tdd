@@ -64,8 +64,8 @@ describe('job repository', () => {
   });
 
   it('should be able to create data in db', async () => {
-    const { createJob } = jobRepository(app.db);
-    const jobId = await createJob(job);
+    const { createJob } = jobRepository;
+    const jobId = await createJob(app.db, job);
 
     expect(jobId).toBeDefined();
   });
@@ -76,36 +76,36 @@ describe('job repository', () => {
       user_id: null,
     };
 
-    const { createJob } = jobRepository(app.db);
+    const { createJob } = jobRepository;
 
     expect.assertions(1);
-    await expect(createJob(jobWithoutUser)).rejects.toThrow(
+    await expect(createJob(app.db, jobWithoutUser)).rejects.toThrow(
       Error('Failed to create a job')
     );
   });
 
   it('should be able to get all jobs from db', async () => {
-    const { createJob, getAllJobs } = jobRepository(app.db);
+    const { createJob, getAllJobs } = jobRepository;
 
-    await createJob({
+    await createJob(app.db, {
       ...job,
       title: 'test job title get all - 1',
     });
 
-    await createJob({
+    await createJob(app.db, {
       ...job,
       title: 'test job title get all - 2',
     });
 
     // Note: get 1 item and skip 0 item.
-    const firstJobs = await getAllJobs(1, 0);
+    const firstJobs = await getAllJobs(app.db, 1, 0);
 
     expect(firstJobs.length).toBe(1);
     expect(firstJobs[0].title).toBeDefined();
     expect(firstJobs[0].title).toBe('test job title get all - 1');
 
     // Note: get 1 item and skip 1 item.
-    const secondJobs = await getAllJobs(1, 1);
+    const secondJobs = await getAllJobs(app.db, 1, 1);
 
     expect(secondJobs.length).toBe(1);
     expect(secondJobs[0].title).toBeDefined();
@@ -113,21 +113,21 @@ describe('job repository', () => {
   });
 
   it('should be able to exclude expired jobs from get all', async () => {
-    const { createJob, getAllJobs } = jobRepository(app.db);
+    const { createJob, getAllJobs } = jobRepository;
 
-    await createJob({
+    await createJob(app.db, {
       ...job,
       title: 'test job title without expired date',
     });
 
-    await createJob({
+    await createJob(app.db, {
       ...job,
       title: 'test job title with expired date',
       expired_at: yesterday,
     });
 
     // Note: get 2 item and skip 0 item.
-    const jobs = await getAllJobs(2, 0);
+    const jobs = await getAllJobs(app.db, 2, 0);
 
     expect(jobs.length).toBe(1);
     expect(jobs[0].title).toBeDefined();
