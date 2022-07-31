@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS jobs_table;
+
 CREATE TABLE jobs_table (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
