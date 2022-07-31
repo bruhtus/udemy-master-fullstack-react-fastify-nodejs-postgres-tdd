@@ -4,6 +4,7 @@ const rootRoute = require('./route/root-route');
 const testRoute = require('./route/temp-test-route');
 const swaggerPlugin = require('./plugin/swagger');
 const userRoute = require('./route/user');
+const jobRoute = require('./route/job');
 
 function build(opts = {}) {
   const app = fastify(opts);
@@ -16,6 +17,7 @@ function build(opts = {}) {
   app.register(rootRoute);
   app.register(testRoute, { prefix: 'api/v1/test' });
   app.register(userRoute, { prefix: 'api/v1/user' });
+  app.register(jobRoute, { prefix: 'api/v1/job' });
 
   return app;
 }
