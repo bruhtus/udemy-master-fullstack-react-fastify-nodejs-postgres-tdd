@@ -18,11 +18,11 @@ async function userRoute(fastify) {
         const body = request.body;
 
         const id = await handler.createUserHandler(body);
-        reply.code(201).send({
+        return reply.code(201).send({
           data: { id },
         });
       } catch (error) {
-        reply.code(400).send(error);
+        return reply.code(400).send(error);
       }
     }
   );
@@ -40,7 +40,7 @@ async function userRoute(fastify) {
       const { id } = request.params;
 
       const user = await handler.getUserByIdHandler(id);
-      reply.code(200).send({
+      return reply.code(200).send({
         data: user,
       });
     }
