@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^8.0.0",
+    "@fastify/jwt": "^6.3.1",
     "@fastify/swagger": "^7.4.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
