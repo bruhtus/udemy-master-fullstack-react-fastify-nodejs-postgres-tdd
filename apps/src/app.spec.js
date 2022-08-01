@@ -127,9 +127,15 @@ describe('app route', () => {
   });
 
   it('should be able to get jobs list', async () => {
+    // Note: add a fake JWT token.
+    const token = app.jwt.sign({ foo: 'bar' });
+
     const getManyResponse = await app.inject({
       method: 'GET',
       url: 'api/v1/job',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       query: { limit: 1, offset: 0 },
     });
 

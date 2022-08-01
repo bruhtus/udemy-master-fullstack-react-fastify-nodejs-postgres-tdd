@@ -18,11 +18,13 @@ jest.mock('../data-access-object/user.dao');
 describe('user handler', () => {
   const createUser = jest.fn();
   const getUserById = jest.fn();
+  const getUserByEmail = jest.fn();
 
   userDao.mockImplementation(() => {
     return {
       createUser,
       getUserById,
+      getUserByEmail,
     };
   });
 
@@ -57,6 +59,27 @@ describe('user handler', () => {
     const userData = await handler.getUserByIdHandler(uuid);
 
     expect(getUserById).toBeCalledTimes(1);
+    expect(userData).toMatchObject({
+      id: response.id,
+      name: `${response.first_name} ${response.last_name}`,
+      email: user.email,
+    });
+  });
+
+  it('should be able to get user by email', async () => {
+    const response = {
+      ...user,
+      id: uuid,
+    };
+
+    getUserByEmail.mockReturnValueOnce(response);
+
+    const userData = await handler.getUserByEmailHandler(
+      user.email,
+      user.password
+    );
+
+    expect(getUserByEmail).toBeCalledTimes(1);
     expect(userData).toMatchObject({
       id: response.id,
       name: `${response.first_name} ${response.last_name}`,

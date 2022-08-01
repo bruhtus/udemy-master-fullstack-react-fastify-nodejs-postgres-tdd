@@ -8,11 +8,13 @@ jest.mock('../../handler/user.handler');
 describe('user route', () => {
   const createUserHandler = jest.fn();
   const getUserByIdHandler = jest.fn();
+  const getUserByEmailHandler = jest.fn();
 
   userHandler.mockImplementation(() => {
     return {
       createUserHandler,
       getUserByIdHandler,
+      getUserByEmailHandler,
     };
   });
 
@@ -114,6 +116,28 @@ describe('user route', () => {
     expect(getByIdResponse.json().data).toMatchObject(data);
     expect(getByIdResponse.statusCode).toBe(200);
   });
+
+  // TODO: make unit test case for login endpoint.
+  // it('should be able to get user by email', async () => {
+  //   const data = {
+  //     ...user,
+  //     id: uuid,
+  //   };
+
+  //   getUserByEmailHandler.mockReturnValueOnce(data);
+
+  //   const loginResponse = await app.inject({
+  //     method: 'POST',
+  //     url: 'api/v1/user/login',
+  //     payload: {
+  //       email: user.email,
+  //       password: user.password,
+  //     },
+  //   });
+
+  //   console.log(loginResponse.json());
+  //   expect(loginResponse.statusCode).toBe(200);
+  // });
 
   it('should be able to reject if user id params not valid', async () => {
     const { first_name: _, last_name: __, password: ___, ...userData } = user;

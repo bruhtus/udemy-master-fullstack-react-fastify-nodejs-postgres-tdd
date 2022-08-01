@@ -101,8 +101,35 @@ const getByIdResponseSchema = {
   },
 };
 
+const loginRequestSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      format: 'email',
+    },
+    password: {
+      type: 'string',
+    },
+  },
+  required: ['email', 'password'],
+};
+
+const loginResponseSchema = {
+  200: {
+    type: 'object',
+    properties: {
+      token: {
+        type: 'string',
+      },
+    },
+  },
+};
+
 module.exports = {
   getByIdResponseSchema,
+  loginRequestSchema,
+  loginResponseSchema,
   postRequestSchema,
   postResponseSchema,
   paramsSchema,

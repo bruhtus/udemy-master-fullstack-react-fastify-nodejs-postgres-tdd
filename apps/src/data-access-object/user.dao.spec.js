@@ -67,13 +67,35 @@ describe('user repository', () => {
     expect(getByIdResponse).toMatchObject(user);
   });
 
+  it('should be able to get user by email', async () => {
+    const user = {
+      first_name: 'The',
+      last_name: 'Primeagen',
+      password: 'beat_me_daddy',
+      email: 'bunspreader@dox-me-daddy.com',
+    };
+
+    const { createUser, getUserByEmail } = userRepository(app.db);
+    await createUser(user);
+    const getByEmailResponse = await getUserByEmail(
+      'bunspreader@dox-me-daddy.com'
+    );
+
+    expect(getByEmailResponse).toBeDefined();
+    expect(getByEmailResponse).toMatchObject(user);
+  });
+
   it('should throw error when user does not exist', async () => {
-    const { getUserById } = userRepository(app.db);
+    const { getUserById, getUserByEmail } = userRepository(app.db);
     const userId = uuidv4();
 
-    expect.assertions(1);
+    expect.assertions(2);
     await expect(getUserById(userId)).rejects.toThrow(
       Error(`user id ${userId} does not exist!`)
     );
+
+    await expect(
+      getUserByEmail('notbunspreader@dox-me-daddy.com')
+    ).rejects.toThrow(Error('Email does not exist!'));
   });
 });

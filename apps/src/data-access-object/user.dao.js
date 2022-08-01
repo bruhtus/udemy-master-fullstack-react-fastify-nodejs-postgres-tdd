@@ -18,6 +18,18 @@ function userRepository(db) {
     }
   }
 
+  async function getUserByEmail(email) {
+    try {
+      const user = await db.one('SELECT * FROM users_table where email = $1', [
+        email,
+      ]);
+
+      return user;
+    } catch (error) {
+      throw new Error('Email does not exist!');
+    }
+  }
+
   async function getUserById(userId) {
     try {
       const user = await db.one(
@@ -31,7 +43,7 @@ function userRepository(db) {
     }
   }
 
-  return { createUser, getUserById };
+  return { createUser, getUserById, getUserByEmail };
 }
 
 module.exports = userRepository;

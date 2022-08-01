@@ -1,8 +1,9 @@
 const Fastify = require('fastify');
 const luxon = require('luxon');
+const { v4: uuidv4 } = require('uuid');
 const jobRoute = require('./index');
 const jobHandler = require('../../handler/job.handler');
-const { v4: uuidv4 } = require('uuid');
+const authenticate = require('../../plugin/authentication');
 
 describe('job route', () => {
   const createJobHandler = jest.spyOn(jobHandler, 'createJobHandler');
@@ -33,6 +34,7 @@ describe('job route', () => {
   beforeAll(async () => {
     app = Fastify();
     app.register(jobRoute, { prefix: 'api/v1/job' });
+    app.register(authenticate);
 
     await app.ready();
   });
@@ -85,9 +87,15 @@ describe('job route', () => {
   it('should be able to get jobs list', async () => {
     getAllJobsHandler.mockReturnValueOnce([job]);
 
+    // Note: add a fake JWT token.
+    const token = app.jwt.sign({ foo: 'bar' });
+
     const getManyResponse = await app.inject({
       method: 'GET',
       url: 'api/v1/job',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       query: { limit: 1, offset: 0 },
     });
 

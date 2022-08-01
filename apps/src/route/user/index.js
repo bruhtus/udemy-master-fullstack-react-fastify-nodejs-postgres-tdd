@@ -27,6 +27,32 @@ async function userRoute(fastify) {
     }
   );
 
+  fastify.post(
+    '/login',
+    {
+      schema: {
+        tags: ['User'],
+        body: schema.loginRequestSchema,
+        response: schema.loginResponseSchema,
+      },
+    },
+    async (request, reply) => {
+      try {
+        const { email, password } = request.body;
+        const user = await handler.getUserByEmailHandler(email, password);
+
+        // Note: create JWT token.
+        const token = fastify.jwt.sign(user);
+
+        return reply.code(200).send({ token: `Bearer ${token}` });
+      } catch (error) {
+        reply.code(401).send({
+          message: error.message,
+        });
+      }
+    }
+  );
+
   fastify.get(
     '/:id',
     {

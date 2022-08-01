@@ -46,6 +46,9 @@ async function jobRoute(fastify) {
       },
     },
     async (request, reply) => {
+      // Note: authenticate request.
+      await fastify.authenticate(request, reply);
+
       const { limit, offset } = request.query;
 
       const jobs = await jobHandler.getAllJobsHandler(fastify, limit, offset);
