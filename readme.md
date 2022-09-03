@@ -294,3 +294,5 @@ manually**.
 - [Jest mock explanation](https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c).
 - [Jest module mocking blog post](https://www.emgoto.com/mocking-with-jest/).
 - [CORS mdn documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+- [Jest object array partial match example repo](https://github.com/HugoDF/jest-object-array-partial-match).
+- [Jest array containing documentation](https://jestjs.io/docs/expect#expectarraycontainingarray).
