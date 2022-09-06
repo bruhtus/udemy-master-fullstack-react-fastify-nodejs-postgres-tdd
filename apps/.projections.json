@@ -1,0 +1,22 @@
+{
+  "src/plugin/*.js": {
+    "type": "plugin"
+  },
+  "src/config/*.js": {
+    "type": "config"
+  },
+  "src/data-access-object/*.dao.js": {
+    "type": "dao",
+    "alternate": "{file|dirname}/{basename}.dao.spec.js"
+  },
+  "src/handler/*.handler.js": {
+    "type": "handler",
+    "alternate": "{file|dirname}/{basename}.handler.spec.js"
+  },
+  "src/route/**/*.js": {
+    "type": "route"
+  },
+  "readme.md": {
+    "type": "readme"
+  }
+}
