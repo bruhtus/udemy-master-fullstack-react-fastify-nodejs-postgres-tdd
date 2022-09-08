@@ -28,4 +28,8 @@ describe('array contain object', () => {
     // the equal assertion will failed. that's why we use `not` in here.
     expect(array).not.toEqual(expect.arrayContaining(expectedThree));
   });
+
+  it('check if non-empty array a subset of empty array', () => {
+    expect(array).toEqual(expect.arrayContaining([]));
+  });
 });
