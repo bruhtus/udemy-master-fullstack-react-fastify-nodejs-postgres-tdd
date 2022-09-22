@@ -18,15 +18,21 @@ describe('array contain object', () => {
     { name: 'Ngini', gender: 'MALE' },
   ];
 
+  const expectedFour = { name: 'Ngitu' };
+
   it('check if the expected array is a subset of received array', () => {
     expect(array).toEqual(expect.arrayContaining(expected));
     expect(array).toEqual(expect.arrayContaining(expectedTwo));
+    expect(array).toEqual(
+      expect.arrayContaining([expect.objectContaining(expectedFour)])
+    );
   });
 
   it('check if the expected array is not a subset of received array', () => {
     // if there is at least one object not a part of the received array,
     // the equal assertion will failed. that's why we use `not` in here.
     expect(array).not.toEqual(expect.arrayContaining(expectedThree));
+    expect(array).not.toEqual(expect.arrayContaining([expectedFour]));
   });
 
   it('check if non-empty array a subset of empty array', () => {
