@@ -1,3 +1,5 @@
+console.log('outside describe block');
+
 describe('describe outer a', () => {
   console.log('describe outer a1');
 
