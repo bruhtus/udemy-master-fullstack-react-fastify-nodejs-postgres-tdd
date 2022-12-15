@@ -26,6 +26,11 @@ describe('array contain object', () => {
     expect(array).toEqual(
       expect.arrayContaining([expect.objectContaining(expectedFour)])
     );
+    expect(array).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'Anu' }, { name: 'Itu' }),
+      ])
+    );
   });
 
   it('check if the expected array is not a subset of received array', () => {
